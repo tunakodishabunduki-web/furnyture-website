@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Furniture Empire — Design Your World</title>
+  <meta name="description" content="Luxury furniture with AR room preview, AI style advisor, and exclusive VIP deals." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     ANNOUNCEMENT BAR
+════════════════════════════════════════════════════════ -->
+<div class="ann-bar">
+  <div class="ann-ticker" id="annTicker">
+    <span>Complimentary shipping on orders over $500</span>
+    <span>New Arrivals — The Autumn Collection</span>
+    <span>AR Room Planner now live</span>
+    <span>VIP members earn 5× points this week</span>
+    <span>Complimentary shipping on orders over $500</span>
+    <span>New Arrivals — The Autumn Collection</span>
+    <span>AR Room Planner now live</span>
+    <span>VIP members earn 5× points this week</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════════════════ -->
+<nav class="nav" id="mainNav">
+  <div class="container nav-inner">
+
+    <!-- Logo -->
+    <button class="nav-logo" onclick="showPage('home')">FURNITURE EMPIRE</button>
+
+    <!-- Center nav links with mega menus -->
+    <div class="nav-links" id="navLinks">
+
+      <!-- New Arrivals -->
+      <div class="nav-item">
+        <button class="nav-link" onclick="showPage('catalog')">
+          New Arrivals
+          <span class="badge-new">New</span>
+        </button>
+        <div class="mega">
+          <div class="mega-inner mega-cols-2">
+            <div class="mega-img">
+              <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=400&q=80" alt="New Arrivals" loading="lazy" />
+              <div class="mega-img-label"><strong>Autumn Edit</strong><span>The season's finest pieces</span></div>
+            </div>
+            <div class="mega-col">
+              <h4>Living Room</h4>
+              <button class="mega-link">Sofas &amp; Sectionals</button>
+              <button class="mega-link">Armchairs</button>
+              <button class="mega-link">Coffee Tables</button>
+              <button class="mega-link">Side Tables</button>
+              <button class="mega-link">Ottomans</button>
+            </div>
+            <div class="mega-col">
+              <h4>Bedroom</h4>
+              <button class="mega-link">Bed Frames</button>
+              <button class="mega-link">Nightstands</button>
+              <button class="mega-link">Dressers</button>
+              <button class="mega-link">Wardrobes</button>
+              <button class="mega-link">Headboards</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Furniture -->
+      <div class="nav-item">
+        <button class="nav-link" onclick="showPage('catalog')">
+          Furniture
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="mega">
+          <div class="mega-inner mega-cols-3">
+            <div class="mega-img">
+              <img src="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=400&q=80" alt="Furniture" loading="lazy" />
+              <div class="mega-img-label"><strong>Crafted to Last</strong><span>Handmade in limited runs</span></div>
+            </div>
+            <div class="mega-col">
+              <h4>Seating</h4>
+              <button class="mega-link">Sofas</button>
+              <button class="mega-link">Armchairs</button>
+              <button class="mega-link">Dining Chairs</button>
+              <button class="mega-link">Bar Stools</button>
+              <button class="mega-link">Benches</button>
+            </div>
+            <div class="mega-col">
+              <h4>Tables</h4>
+              <button class="mega-link">Coffee Tables</button>
+              <button class="mega-link">Dining Tables</button>
+              <button class="mega-link">Desks</button>
+              <button class="mega-link">Console Tables</button>
+              <button class="mega-link">Bedside</button>
+            </div>
+            <div class="mega-col">
+              <h4>Storage</h4>
+              <button class="mega-link">Bookshelves</button>
+              <button class="mega-link">Wardrobes</button>
+              <button class="mega-link">Sideboards</button>
+              <button class="mega-link">Media Units</button>
+              <button class="mega-link">Cabinets</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lighting -->
+      <div class="nav-item">
+        <button class="nav-link" onclick="showPage('catalog')">
+          Lighting
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="mega">
+          <div class="mega-inner mega-cols-2">
+            <div class="mega-img">
+              <img src="https://images.unsplash.com/photo-1513506003901-1e6a35ee2d25?auto=format&fit=crop&w=400&q=80" alt="Lighting" loading="lazy" />
+              <div class="mega-img-label"><strong>Illuminate Beautifully</strong><span>Floor, pendant &amp; table lamps</span></div>
+            </div>
+            <div class="mega-col">
+              <h4>By Type</h4>
+              <button class="mega-link">Floor Lamps</button>
+              <button class="mega-link">Pendant Lights</button>
+              <button class="mega-link">Table Lamps</button>
+              <button class="mega-link">Wall Lights</button>
+              <button class="mega-link">Chandeliers</button>
+            </div>
+            <div class="mega-col">
+              <h4>By Style</h4>
+              <button class="mega-link">Art Deco</button>
+              <button class="mega-link">Scandinavian</button>
+              <button class="mega-link">Industrial</button>
+              <button class="mega-link">Contemporary</button>
+              <button class="mega-link">Japandi</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Outdoor -->
+      <div class="nav-item">
+        <button class="nav-link" onclick="showPage('catalog')">
+          Outdoor
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="mega">
+          <div class="mega-inner mega-cols-2">
+            <div class="mega-img">
+              <img src="https://images.unsplash.com/photo-1555636222-cae831e670b3?auto=format&fit=crop&w=400&q=80" alt="Outdoor" loading="lazy" />
+              <div class="mega-img-label"><strong>Open Air Living</strong><span>Weather-resistant collections</span></div>
+            </div>
+            <div class="mega-col">
+              <h4>Outdoor</h4>
+              <button class="mega-link">Outdoor Sofas</button>
+              <button class="mega-link">Dining Sets</button>
+              <button class="mega-link">Sun Loungers</button>
+              <button class="mega-link">Planters</button>
+              <button class="mega-link">Hammocks</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <button class="nav-link sale" onclick="showPage('catalog')">Sale</button>
+      </div>
+    </div>
+
+    <!-- Right actions -->
+    <div class="nav-actions">
+      <button class="btn-icon" id="searchBtn" title="Search" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="btn-icon hide-on-mobile" title="Wishlist">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <button class="btn-icon hide-on-mobile" title="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <button class="btn-icon" id="cartBtn" title="Cart" style="position:relative">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count" id="cartCount" style="display:none">0</span>
+      </button>
+      <!-- Theme toggle -->
+      <button class="btn-icon" id="themeToggle" title="Toggle theme">
+        <svg id="iconSun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="iconMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <!-- Mobile hamburger -->
+      <button class="btn-icon show-on-mobile" id="mobileMenuBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════
+     MOBILE MENU
+════════════════════════════════════════════════════════ -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <span class="nav-logo">FURNITURE EMPIRE</span>
+    <button class="btn-icon" id="mobileMenuClose">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <button class="mobile-nav-link" onclick="showPage('home');closeMobileMenu()">Home</button>
+  <button class="mobile-nav-link" onclick="showPage('catalog');closeMobileMenu()">New Arrivals</button>
+  <button class="mobile-nav-link" onclick="showPage('catalog');closeMobileMenu()">Furniture</button>
+  <button class="mobile-nav-link" onclick="showPage('catalog');closeMobileMenu()">Lighting</button>
+  <button class="mobile-nav-link" onclick="showPage('catalog');closeMobileMenu()">Outdoor</button>
+  <button class="mobile-nav-link" onclick="showPage('catalog');closeMobileMenu()" style="color:var(--accent)">Sale</button>
+  <button class="mobile-nav-link" onclick="showPage('ar');closeMobileMenu()">AR Planner</button>
+  <div class="mobile-menu-footer">
+    <button class="btn btn-primary btn-sm" onclick="showPage('catalog');closeMobileMenu()">Shop Now</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEARCH OVERLAY
+════════════════════════════════════════════════════════ -->
+<div class="search-overlay" id="searchOverlay">
+  <button class="btn-icon search-close" id="searchClose">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="search-input-wrap">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input class="search-input" id="searchInput" type="text" placeholder="Search furniture, rooms, styles…" autocomplete="off" />
+  </div>
+  <div id="searchContent">
+    <div class="search-label">Trending Searches</div>
+    <div class="search-trends">
+      <button class="search-trend" onclick="doSearch('Scandinavian sofa')">Scandinavian sofa</button>
+      <button class="search-trend" onclick="doSearch('Japandi bedroom')">Japandi bedroom</button>
+      <button class="search-trend" onclick="doSearch('Mid-century chair')">Mid-century chair</button>
+      <button class="search-trend" onclick="doSearch('Dining table oak')">Dining table oak</button>
+      <button class="search-trend" onclick="doSearch('Floor lamp brass')">Floor lamp brass</button>
+      <button class="search-trend" onclick="doSearch('Coffee table marble')">Coffee table marble</button>
+    </div>
+  </div>
+  <div class="search-results" id="searchResults" style="display:none"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CART DRAWER
+════════════════════════════════════════════════════════ -->
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <div class="cart-drawer">
+    <div class="cart-head">
+      <h3>Your Cart (<span id="cartHeadCount">0</span>)</h3>
+      <button class="btn-icon" id="cartClose">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+    <div class="cart-foot" id="cartFoot" style="display:none">
+      <div class="cart-subtotal">
+        <span class="cart-subtotal-label">Subtotal</span>
+        <span class="cart-subtotal-val" id="cartTotal">$0</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center">Proceed to Checkout</button>
+      <button class="btn btn-whatsapp" onclick="chatOnWhatsApp()" style="width:100%;justify-content:center;margin-top:12px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right:8px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/></svg>
+        Chat on WhatsApp
+      </button>
+      <div class="cart-note">Free shipping on this order ✓</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     QUICK VIEW MODAL
+════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="quickViewModal">
+  <div class="modal-box">
+    <button class="btn-icon modal-close" id="modalClose">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="modal-inner" id="modalInner"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TOAST CONTAINER
+════════════════════════════════════════════════════════ -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGES WRAPPER
+════════════════════════════════════════════════════════ -->
+
+<!-- ─── HOME PAGE ─────────────────────────────────────── -->
+<div class="page active page-fade" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1800&q=85')"></div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-line"></div>
+          <span>Autumn Collection 2025</span>
+        </div>
+        <h1>Design Your<br /><em>Empire.</em></h1>
+        <p class="hero-sub">Furniture crafted for the way you actually live. Timeless pieces, expertly made, delivered to your door.</p>
+        <div class="hero-btns">
+          <button class="btn btn-white" onclick="showPage('catalog')">
+            Shop the Collection
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+          <button class="btn btn-ghost-w" onclick="showPage('ar')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg>
+            Try AR Planner
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- PERKS -->
+  <div class="perks-strip">
+    <div class="container">
+      <div class="perks-grid">
+        <div class="perk reveal">
+          <svg class="perk-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4a2 2 0 0 1 2 2v6H16V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <div><div class="perk-title">Free Shipping</div><div class="perk-sub">On orders over $500</div></div>
+        </div>
+        <div class="perk reveal reveal-d1">
+          <svg class="perk-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          <div><div class="perk-title">Handcrafted Quality</div><div class="perk-sub">Built to last generations</div></div>
+        </div>
+        <div class="perk reveal reveal-d2">
+          <svg class="perk-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg>
+          <div><div class="perk-title">AR Room Preview</div><div class="perk-sub">See it before you buy</div></div>
+        </div>
+        <div class="perk reveal reveal-d3">
+          <svg class="perk-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+          <div><div class="perk-title">30-Day Returns</div><div class="perk-sub">Hassle-free guarantee</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-48 reveal">
+        <span class="eyebrow mb-12" style="display:block">Shop by Room</span>
+        <h2>Every Space, Perfected</h2>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-tile reveal" onclick="showPage('catalog')">
+          <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80" alt="Living Room" loading="lazy" />
+          <div class="cat-tile-overlay"></div>
+          <div class="cat-tile-label">
+            <span class="eyebrow">Explore</span>
+            <h3>Living Room</h3>
+          </div>
+        </div>
+        <div class="cat-tile reveal reveal-d1" onclick="showPage('catalog')">
+          <img src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?auto=format&fit=crop&w=800&q=80" alt="Bedroom" loading="lazy" />
+          <div class="cat-tile-overlay"></div>
+          <div class="cat-tile-label">
+            <span class="eyebrow">Explore</span>
+            <h3>Bedroom</h3>
+          </div>
+        </div>
+        <div class="cat-tile reveal reveal-d2" onclick="showPage('catalog')">
+          <img src="https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=800&q=80" alt="Dining" loading="lazy" />
+          <div class="cat-tile-overlay"></div>
+          <div class="cat-tile-label">
+            <span class="eyebrow">Explore</span>
+            <h3>Dining</h3>
+          </div>
+        </div>
+        <div class="cat-tile reveal reveal-d1" onclick="showPage('catalog')">
+          <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?auto=format&fit=crop&w=800&q=80" alt="Office" loading="lazy" />
+          <div class="cat-tile-overlay"></div>
+          <div class="cat-tile-label">
+            <span class="eyebrow">Explore</span>
+            <h3>Home Office</h3>
+          </div>
+        </div>
+        <div class="cat-tile reveal reveal-d2" onclick="showPage('catalog')">
+          <img src="https://images.unsplash.com/photo-1555636222-cae831e670b3?auto=format&fit=crop&w=800&q=80" alt="Outdoor" loading="lazy" />
+          <div class="cat-tile-overlay"></div>
+          <div class="cat-tile-label">
+            <span class="eyebrow">Explore</span>
+            <h3>Outdoor</h3>
+          </div>
+        </div>
+        <div class="cat-tile reveal reveal-d3" onclick="showPage('catalog')">
+          <img src="https://images.unsplash.com/photo-1513506003901-1e6a35ee2d25?auto=format&fit=crop&w=800&q=80" alt="Lighting" loading="lazy" />
+          <div class="cat-tile-overlay"></div>
+          <div class="cat-tile-label">
+            <span class="eyebrow">Explore</span>
+            <h3>Lighting</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW ARRIVALS -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-header-left">
+          <span class="eyebrow">Just Landed</span>
+          <h2>New Arrivals</h2>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="showPage('catalog')">
+          View All
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+      <div class="products-grid" id="newArrivalsGrid"></div>
+    </div>
+  </section>
+
+  <!-- BRAND STORY -->
+  <section class="brand-story">
+    <div class="container" style="padding:0;max-width:100%">
+      <div class="brand-story-grid">
+        <div class="brand-story-img reveal">
+          <img src="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=900&q=85" alt="Craftsmanship" loading="lazy" />
+        </div>
+        <div class="brand-story-text" style="padding-left:72px;padding-right:72px">
+          <div class="section-rule reveal" style="margin-bottom:22px"></div>
+          <span class="eyebrow reveal" style="margin-bottom:18px">Our Story</span>
+          <h2 class="reveal reveal-d1" style="margin-bottom:22px">
+            Crafted with intention.<br />
+            <em style="font-weight:400">Built to last generations.</em>
+          </h2>
+          <p class="reveal reveal-d2" style="font-size:14.5px;color:var(--muted);line-height:1.82;margin-bottom:30px;max-width:400px">
+            Every piece in our collection is conceived by designers who believe furniture should be more than functional — it should tell a story. We partner with artisans across East Africa and Europe to create works that age beautifully and hold their value.
+          </p>
+          <div class="brand-stats reveal reveal-d2">
+            <div><div class="brand-stat-num">12,400+</div><div class="brand-stat-label">Homes furnished</div></div>
+            <div><div class="brand-stat-num">98%</div><div class="brand-stat-label">Customer satisfaction</div></div>
+            <div><div class="brand-stat-num">15+</div><div class="brand-stat-label">Countries served</div></div>
+            <div><div class="brand-stat-num">Lifetime</div><div class="brand-stat-label">Craftsmanship guarantee</div></div>
+          </div>
+          <div class="reveal reveal-d3">
+            <button class="btn btn-outline">Our Story <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED BANNER -->
+  <section class="feat-banner">
+    <div class="feat-banner-bg" style="background-image:url('https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=1800&q=85')"></div>
+    <div class="feat-banner-overlay"></div>
+    <div class="feat-banner-content">
+      <span class="eyebrow reveal">Featured Collection</span>
+      <h2 class="reveal reveal-d1">The Autumn<br /><em>Collection</em></h2>
+      <p class="reveal reveal-d2">Warm textures, rich oak tones, and velvet upholstery. A season of depth and intimacy expressed through our finest pieces.</p>
+      <div class="feat-btns reveal reveal-d3">
+        <button class="btn btn-primary" onclick="showPage('catalog')">Shop Now</button>
+        <button class="btn btn-ghost-w" onclick="showPage('catalog')">View Lookbook</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BESTSELLERS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-header-left">
+          <span class="eyebrow">Most Loved</span>
+          <h2>Bestsellers</h2>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="showPage('catalog')">
+          View All
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+      <div class="products-grid" id="bestsellersGrid"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" style="background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="container">
+      <div class="text-center mb-48 reveal">
+        <span class="eyebrow mb-12" style="display:block">Customer Stories</span>
+        <h2>Homes Transformed</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal reveal-d1">
+          <span class="testi-quote">"</span>
+          <p class="testi-text">The Ravello sofa transformed our living room entirely. The craftsmanship is extraordinary — every seam, every stitch speaks of genuine care. Delivery was smooth and the team was professional throughout.</p>
+          <div class="testi-footer">
+            <div class="testi-avatar">A</div>
+            <div>
+              <div class="testi-name">Amara Osei</div>
+              <div class="testi-loc">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Dar es Salaam, Tanzania
+              </div>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:2px">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal reveal-d2">
+          <span class="testi-quote">"</span>
+          <p class="testi-text">I ordered the Meridian dining table and it exceeded every expectation. The AR planner helped me visualize it perfectly before purchasing. The oak is rich and warm.</p>
+          <div class="testi-footer">
+            <div class="testi-avatar">K</div>
+            <div>
+              <div class="testi-name">Karim Nasser</div>
+              <div class="testi-loc">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Nairobi, Kenya
+              </div>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:2px">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal reveal-d3">
+          <span class="testi-quote">"</span>
+          <p class="testi-text">Furniture Empire's AI style advisor suggested pieces I never would have considered. The result is a bedroom that feels like a boutique hotel. I've already recommended them to everyone.</p>
+          <div class="testi-footer">
+            <div class="testi-avatar">S</div>
+            <div>
+              <div class="testi-name">Sofia Mensah</div>
+              <div class="testi-loc">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Accra, Ghana
+              </div>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:2px">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A053" stroke="#D4A053" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <div class="newsletter-section">
+    <div class="container">
+      <span class="eyebrow">Newsletter</span>
+      <h2 class="serif" style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:400">Be the First to Know</h2>
+      <p>New collections, exclusive offers, and design inspiration — delivered monthly.</p>
+      <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+        <input class="newsletter-input" type="email" id="newsletterEmail" placeholder="Your email address" required />
+        <button class="newsletter-btn" type="submit">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </form>
+      <div class="newsletter-success" id="newsletterSuccess" style="display:none">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        You're on the list. Thank you.
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">FURNITURE EMPIRE</div>
+          <p class="footer-brand-desc">Luxury furniture designed for life. Crafted to endure, styled to inspire.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+            </a>
+            <a href="#" aria-label="Pinterest">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.77 1.24-5.27 1.24-5.27s-.32-.63-.32-1.57c0-1.47.85-2.57 1.91-2.57.9 0 1.34.68 1.34 1.49 0 .91-.58 2.27-.88 3.53-.25 1.05.52 1.91 1.56 1.91 1.87 0 3.13-2.4 3.13-5.24 0-2.16-1.46-3.67-3.55-3.67-2.41 0-3.83 1.81-3.83 3.68 0 .73.28 1.51.63 1.93.07.08.08.15.06.24l-.24.96c-.04.15-.13.18-.3.11-1.1-.51-1.79-2.1-1.79-3.38 0-2.75 2-5.27 5.77-5.27 3.03 0 5.39 2.16 5.39 5.04 0 3.01-1.9 5.43-4.53 5.43-.88 0-1.71-.46-2-1l-.54 2.04c-.2.75-.73 1.69-1.08 2.26.81.25 1.67.39 2.55.39 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Shop</div>
+          <button class="footer-link" onclick="showPage('catalog')">Living Room</button>
+          <button class="footer-link" onclick="showPage('catalog')">Bedroom</button>
+          <button class="footer-link" onclick="showPage('catalog')">Dining</button>
+          <button class="footer-link" onclick="showPage('catalog')">Office</button>
+          <button class="footer-link" onclick="showPage('catalog')">Lighting</button>
+          <button class="footer-link" onclick="showPage('catalog')" style="color:var(--accent)">Sale</button>
+        </div>
+        <div>
+          <div class="footer-col-title">Services</div>
+          <button class="footer-link" onclick="showPage('ar')">AR Room Planner</button>
+          <button class="footer-link">Style Advisor</button>
+          <button class="footer-link">Design Consultation</button>
+          <button class="footer-link">Trade Program</button>
+          <button class="footer-link">Gift Cards</button>
+        </div>
+        <div>
+          <div class="footer-col-title">Company</div>
+          <button class="footer-link">About Us</button>
+          <button class="footer-link">Sustainability</button>
+          <button class="footer-link">Careers</button>
+          <button class="footer-link">Press</button>
+          <button class="footer-link">Contact</button>
+        </div>
+        <div>
+          <div class="footer-col-title">Support</div>
+          <button class="footer-link">Shipping Info</button>
+          <button class="footer-link">Returns</button>
+          <button class="footer-link">FAQ</button>
+          <button class="footer-link">Track Order</button>
+          <button class="footer-link">Warranty</button>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 Furniture Empire. All rights reserved.
+          <!-- SECRET ADMIN TRIGGER — 3 dots, barely visible -->
+          <button class="admin-trigger" id="adminTrigger" title="" aria-label="System">···</button>
+        </span>
+        <div class="footer-legal">
+          <button>Privacy Policy</button>
+          <button>Terms of Use</button>
+          <button>Cookies</button>
+        </div>
+        <button class="btn btn-whatsapp-footer" onclick="chatOnWhatsApp()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/></svg>
+          Chat with us on WhatsApp
+        </button>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /page-home -->
+
+<!-- ─── CATALOG PAGE ──────────────────────────────────── -->
+<div class="page page-fade" id="page-catalog">
+  <div style="padding-bottom:80px">
+    <div class="catalog-header">
+      <div class="container">
+        <span class="eyebrow mb-12" style="display:block">Collections</span>
+        <h1 class="serif" style="font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,58px);font-weight:400;letter-spacing:-.015em;margin-bottom:4px">All Furniture</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="catalog-filter-bar">
+        <div class="cat-tabs" id="catTabs">
+          <button class="cat-tab active" data-cat="All" onclick="filterCatalog('All',this)">All</button>
+          <button class="cat-tab" data-cat="Living Room" onclick="filterCatalog('Living Room',this)">Living Room</button>
+          <button class="cat-tab" data-cat="Dining" onclick="filterCatalog('Dining',this)">Dining</button>
+          <button class="cat-tab" data-cat="Bedroom" onclick="filterCatalog('Bedroom',this)">Bedroom</button>
+          <button class="cat-tab" data-cat="Office" onclick="filterCatalog('Office',this)">Office</button>
+          <button class="cat-tab" data-cat="Lighting" onclick="filterCatalog('Lighting',this)">Lighting</button>
+        </div>
+        <div class="filter-right">
+          <div class="filter-search-wrap">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input class="filter-search" type="text" id="catalogSearch" placeholder="Search…" oninput="filterCatalog(currentCat,null)" />
+          </div>
+          <select class="filter-select" id="catalogSort" onchange="filterCatalog(currentCat,null)">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price ↑</option>
+            <option value="price-desc">Price ↓</option>
+            <option value="rating">Top Rated</option>
+          </select>
+        </div>
+      </div>
+      <div class="catalog-count" id="catalogCount"></div>
+      <div class="products-grid" id="catalogGrid"></div>
+    </div>
+  </div>
+</div><!-- /page-catalog -->
+
+<!-- ─── AR PLANNER PAGE ───────────────────────────────── -->
+<div class="page page-fade" id="page-ar">
+  <div class="container" style="padding-top:56px;padding-bottom:80px">
+    <div style="margin-bottom:36px">
+      <span class="eyebrow mb-12" style="display:block">Visualise Your Space</span>
+      <h1 class="serif" style="font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,52px);font-weight:400;letter-spacing:-.015em;margin-bottom:10px">AR Room Planner</h1>
+      <p style="color:var(--muted);font-size:14px">Drag furniture from the palette into your room. Select placed items to resize and rotate.</p>
+    </div>
+    <div class="ar-wrap">
+      <div class="ar-palette">
+        <div class="ar-palette-title">Furniture Library</div>
+        <button class="ar-piece" onclick="arAddPiece({id:'s1',name:'Ravello Sofa',emoji:'🛋️',w:180,h:90})">
+          <span>🛋️</span><span class="ar-piece-name">Ravello Sofa</span>
+        </button>
+        <button class="ar-piece" onclick="arAddPiece({id:'s2',name:'Lounge Chair',emoji:'🪑',w:90,h:90})">
+          <span>🪑</span><span class="ar-piece-name">Lounge Chair</span>
+        </button>
+        <button class="ar-piece" onclick="arAddPiece({id:'s3',name:'Coffee Table',emoji:'☕',w:120,h:60})">
+          <span>☕</span><span class="ar-piece-name">Coffee Table</span>
+        </button>
+        <button class="ar-piece" onclick="arAddPiece({id:'s4',name:'Floor Lamp',emoji:'💡',w:50,h:120})">
+          <span>💡</span><span class="ar-piece-name">Floor Lamp</span>
+        </button>
+        <button class="ar-piece" onclick="arAddPiece({id:'s5',name:'Bookshelf',emoji:'📚',w:100,h:160})">
+          <span>📚</span><span class="ar-piece-name">Bookshelf</span>
+        </button>
+        <button class="ar-piece" onclick="arAddPiece({id:'s6',name:'Dining Table',emoji:'🪵',w:160,h:100})">
+          <span>🪵</span><span class="ar-piece-name">Dining Table</span>
+        </button>
+        <button class="ar-piece" onclick="arAddPiece({id:'s7',name:'Bed Frame',emoji:'🛏️',w:170,h:140})">
+          <span>🛏️</span><span class="ar-piece-name">Bed Frame</span>
+        </button>
+        <button class="ar-piece" onclick="arAddPiece({id:'s8',name:'Side Table',emoji:'🏺',w:60,h:60})">
+          <span>🏺</span><span class="ar-piece-name">Side Table</span>
+        </button>
+      </div>
+      <div class="ar-canvas" id="arCanvas">
+        <div class="ar-canvas-bg"></div>
+        <div class="ar-floor"></div>
+        <div class="ar-empty" id="arEmpty">
+          <div class="ar-empty-icon">🪑</div>
+          <p>Add furniture from the panel to begin</p>
+        </div>
+        <!-- AR items injected here by JS -->
+      </div>
+    </div>
+    <!-- AR Controls bar (shown when item selected) -->
+    <div class="ar-controls" id="arControls" style="display:none">
+      <span id="arSelEmoji" style="font-size:18px">🛋️</span>
+      <div style="flex:1">
+        <div class="ar-control-label">SCALE <span id="arScaleVal">100</span>%</div>
+        <input class="ar-slider" type="range" min="0.4" max="2.5" step="0.05" value="1" id="arScaleSlider" oninput="arUpdateScale(this.value)" />
+      </div>
+      <div style="flex:1">
+        <div class="ar-control-label">ROTATE <span id="arRotVal">0</span>°</div>
+        <input class="ar-slider" type="range" min="-180" max="180" step="5" value="0" id="arRotSlider" oninput="arUpdateRot(this.value)" />
+      </div>
+      <button class="ar-del" onclick="arDeleteSelected()">Remove</button>
+    </div>
+  </div>
+</div><!-- /page-ar -->
+
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Control Panel — Furniture Empire</title>
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     AUTH SCREEN
+════════════════════════════════════════════════════════ -->
+<div class="auth-screen" id="authScreen">
+  <div class="auth-box">
+    <span class="auth-logo">Furniture Empire</span>
+    <div class="auth-bar"></div>
+    <h1 class="auth-title">Control Panel</h1>
+    <p class="auth-sub">Authenticated access only. All sessions are logged.</p>
+
+    <div class="auth-error" id="authError">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="authErrorMsg">Invalid credentials. Try again.</span>
+    </div>
+
+    <form id="authForm" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label class="form-label" for="authUser">Username</label>
+        <input class="form-input" type="text" id="authUser" placeholder="admin" autocomplete="username" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="authPass">Password</label>
+        <div class="form-input-wrap">
+          <input class="form-input" type="password" id="authPass" placeholder="••••••••" autocomplete="current-password" required />
+          <button type="button" class="form-input-icon" id="togglePass">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="topbar-btn topbar-btn-primary" style="width:100%;justify-content:center;padding:13px">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Sign In to Control Panel
+      </button>
+    </form>
+
+    <p class="auth-hint">Default: <code>admin</code> / <code>empire2025</code><br />Change in admin settings after first login.</p>
+
+    <div class="auth-badges">
+      <div class="auth-badge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        256-bit encrypted
+      </div>
+      <div class="auth-badge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        Session auditing
+      </div>
+      <div class="auth-badge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        Auto-logout 30min
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     ADMIN PANEL (hidden until authenticated)
+════════════════════════════════════════════════════════ -->
+<div class="admin-layout" id="adminLayout" style="display:none">
+
+  <!-- ─── SIDEBAR ────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">🏛️</div>
+      <div>
+        <div class="sidebar-logo-text">Furniture Empire</div>
+        <div class="sidebar-logo-sub">Control Panel v3.0</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-title">Overview</div>
+      <button class="sidebar-link active" onclick="showAdminPage('dashboard',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </button>
+      <button class="sidebar-link" onclick="showAdminPage('analytics',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Analytics
+      </button>
+
+      <div class="sidebar-section-title">Store</div>
+      <button class="sidebar-link" onclick="showAdminPage('products',this)" id="navProducts">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Products
+        <span class="badge" id="productsBadge">0</span>
+      </button>
+      <button class="sidebar-link" onclick="showAdminPage('orders',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Orders
+        <span class="badge" id="ordersBadge">3</span>
+      </button>
+      <button class="sidebar-link" onclick="showAdminPage('customers',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Customers
+      </button>
+      <button class="sidebar-link" onclick="showAdminPage('inventory',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Inventory
+      </button>
+
+      <div class="sidebar-section-title">Marketing</div>
+      <button class="sidebar-link" onclick="showAdminPage('promotions',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Promotions
+      </button>
+
+      <div class="sidebar-section-title">System</div>
+      <button class="sidebar-link" onclick="showAdminPage('settings',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        Settings
+      </button>
+      <button class="sidebar-link" onclick="showAdminPage('audit',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Audit Log
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar" id="avatarInitial">A</div>
+        <div>
+          <div class="sidebar-user-name" id="sidebarUserName">Admin</div>
+          <div class="sidebar-user-role">Super Administrator</div>
+        </div>
+      </div>
+      <button class="btn-admin btn-admin-danger btn-admin-sm" style="width:100%;justify-content:center" onclick="handleLogout()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ───────────────────────────────────────── -->
+  <div class="admin-content">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      <div class="topbar-right">
+        <span class="topbar-time" id="topbarTime"></span>
+        <a href="../index.html" target="_blank" class="topbar-btn topbar-btn-secondary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          View Store
+        </a>
+      </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="page-content">
+
+      <!-- ─── DASHBOARD ─────────────────────────────── -->
+      <div class="admin-page active" id="page-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card stat-card-green">
+            <div class="stat-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              Total Revenue
+            </div>
+            <div class="stat-value">$84,320</div>
+            <div class="stat-change stat-change-up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+              +18.4% this month
+            </div>
+          </div>
+          <div class="stat-card stat-card-blue">
+            <div class="stat-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg>
+              Total Orders
+            </div>
+            <div class="stat-value" id="dashOrders">0</div>
+            <div class="stat-change stat-change-up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+              3 pending
+            </div>
+          </div>
+          <div class="stat-card stat-card-gold">
+            <div class="stat-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              Products
+            </div>
+            <div class="stat-value" id="dashProducts">0</div>
+            <div class="stat-change stat-change-up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+              Active in catalog
+            </div>
+          </div>
+          <div class="stat-card stat-card-accent">
+            <div class="stat-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              Customers
+            </div>
+            <div class="stat-value">1,248</div>
+            <div class="stat-change stat-change-up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+              +42 this week
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Products & Quick Actions -->
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:18px">
+          <div class="table-card">
+            <div class="table-card-header">
+              <div class="table-card-title">Recent Products</div>
+              <button class="btn-admin btn-admin-primary btn-admin-sm" onclick="showAdminPage('products',null);openProductModal()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Add Product
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table id="dashProductTable">
+                <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Status</th></tr></thead>
+                <tbody id="dashProductBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <!-- Quick actions -->
+            <div class="table-card" style="padding:20px">
+              <div class="table-card-title" style="margin-bottom:14px">Quick Actions</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <button class="btn-admin btn-admin-primary" style="justify-content:flex-start" onclick="showAdminPage('products',null);openProductModal()">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Add New Product
+                </button>
+                <button class="btn-admin btn-admin-outline" style="justify-content:flex-start" onclick="showAdminPage('orders',null)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg>
+                  Manage Orders
+                </button>
+                <button class="btn-admin btn-admin-outline" style="justify-content:flex-start" onclick="showAdminPage('promotions',null)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78z"/></svg>
+                  Create Promotion
+                </button>
+                <a href="../index.html" target="_blank" class="btn-admin btn-admin-outline" style="justify-content:flex-start">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  Preview Storefront
+                </a>
+              </div>
+            </div>
+            <!-- System status -->
+            <div class="table-card" style="padding:20px">
+              <div class="table-card-title" style="margin-bottom:14px">System Status</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:12.5px;color:var(--text-2)">Storefront</span>
+                  <span class="badge badge-green">Online</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:12.5px;color:var(--text-2)">AR Planner</span>
+                  <span class="badge badge-green">Active</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:12.5px;color:var(--text-2)">API Backend</span>
+                  <span class="badge badge-gold">Configuring</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:12.5px;color:var(--text-2)">Last Backup</span>
+                  <span style="font-size:12px;color:var(--muted)">2 hours ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── PRODUCTS ──────────────────────────────── -->
+      <div class="admin-page" id="page-products">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="table-card-title">All Products (<span id="productCount">0</span>)</div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="admin-search-wrap">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input class="admin-search" type="text" id="productSearch" placeholder="Search products…" oninput="renderProductTable()" />
+              </div>
+              <select class="form-input-admin form-select-admin" id="productCatFilter" onchange="renderProductTable()" style="width:150px;padding:7px 32px 7px 12px">
+                <option value="">All Categories</option>
+                <option>Living Room</option><option>Dining</option><option>Bedroom</option>
+                <option>Office</option><option>Lighting</option>
+              </select>
+              <button class="btn-admin btn-admin-primary" onclick="openProductModal()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Add Product
+              </button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:50px"></th>
+                  <th>Product</th><th>Category</th><th>Style</th>
+                  <th>Price</th><th>Badge</th><th>Rating</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── ORDERS ────────────────────────────────── -->
+      <div class="admin-page" id="page-orders">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="table-card-title">Orders</div>
+            <div class="admin-search-wrap">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input class="admin-search" type="text" placeholder="Search orders…" />
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Order #</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+              <tbody id="orderTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── CUSTOMERS ─────────────────────────────── -->
+      <div class="admin-page" id="page-customers">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="table-card-title">Customers (1,248)</div>
+          </div>
+          <div class="empty-state">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <h3>Customer data available via API</h3>
+            <p>Connect the backend API to manage customer accounts, orders, and loyalty points.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── INVENTORY ─────────────────────────────── -->
+      <div class="admin-page" id="page-inventory">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="table-card-title">Inventory Overview</div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock Level</th><th>Status</th></tr></thead>
+              <tbody id="inventoryTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── ANALYTICS ─────────────────────────────── -->
+      <div class="admin-page" id="page-analytics">
+        <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+          <div class="stat-card stat-card-blue">
+            <div class="stat-label">Page Views (30d)</div>
+            <div class="stat-value">48,320</div>
+            <div class="stat-change stat-change-up"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg> +22% vs last period</div>
+          </div>
+          <div class="stat-card stat-card-green">
+            <div class="stat-label">Conversion Rate</div>
+            <div class="stat-value">3.8%</div>
+            <div class="stat-change stat-change-up"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg> +0.4pp this month</div>
+          </div>
+          <div class="stat-card stat-card-gold">
+            <div class="stat-label">Avg. Order Value</div>
+            <div class="stat-value">$1,420</div>
+            <div class="stat-change stat-change-up"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg> +8.2% this month</div>
+          </div>
+        </div>
+        <div class="table-card" style="padding:24px">
+          <div class="table-card-title" style="margin-bottom:18px">Traffic Overview — Last 7 Days</div>
+          <div class="chart-bar-group">
+            <div class="chart-bar" style="height:45%" title="Mon: 6,200"></div>
+            <div class="chart-bar" style="height:62%" title="Tue: 8,500"></div>
+            <div class="chart-bar" style="height:38%" title="Wed: 5,200"></div>
+            <div class="chart-bar" style="height:78%" title="Thu: 10,700"></div>
+            <div class="chart-bar" style="height:55%" title="Fri: 7,600"></div>
+            <div class="chart-bar" style="height:90%" title="Sat: 12,400"></div>
+            <div class="chart-bar" style="height:70%" title="Sun: 9,600"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:var(--muted)">Mon</span>
+            <span style="font-size:11px;color:var(--muted)">Tue</span>
+            <span style="font-size:11px;color:var(--muted)">Wed</span>
+            <span style="font-size:11px;color:var(--muted)">Thu</span>
+            <span style="font-size:11px;color:var(--muted)">Fri</span>
+            <span style="font-size:11px;color:var(--muted)">Sat</span>
+            <span style="font-size:11px;color:var(--muted)">Sun</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── PROMOTIONS ────────────────────────────── -->
+      <div class="admin-page" id="page-promotions">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="table-card-title">Promotions & Discount Codes</div>
+            <button class="btn-admin btn-admin-primary" onclick="adminToast('Promotion builder coming soon','info')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Create Promotion
+            </button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Used</th><th>Expires</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">EMPIRE10</td><td>Percent</td><td>10% OFF</td><td>48</td><td>Dec 31, 2025</td><td><span class="badge badge-green">Active</span></td></tr>
+                <tr><td class="mono">SAVE50</td><td>Fixed</td><td>$50 OFF</td><td>12</td><td>Oct 31, 2025</td><td><span class="badge badge-green">Active</span></td></tr>
+                <tr><td class="mono">AUTUMN25</td><td>Percent</td><td>25% OFF</td><td>0</td><td>Nov 30, 2025</td><td><span class="badge badge-muted">Scheduled</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── SETTINGS ──────────────────────────────── -->
+      <div class="admin-page" id="page-settings">
+        <div style="max-width:560px">
+          <div class="table-card" style="padding:28px;margin-bottom:18px">
+            <div class="table-card-title" style="margin-bottom:20px">Admin Credentials</div>
+            <div class="form-row">
+              <div class="form-group-admin">
+                <label class="form-label-admin">Username</label>
+                <input class="form-input-admin" type="text" id="settingsUsername" placeholder="admin" />
+              </div>
+              <div class="form-group-admin">
+                <label class="form-label-admin">Current Password</label>
+                <input class="form-input-admin" type="password" id="settingsCurrent" placeholder="••••••••" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group-admin">
+                <label class="form-label-admin">New Password</label>
+                <input class="form-input-admin" type="password" id="settingsNew" placeholder="Min. 8 characters" />
+              </div>
+              <div class="form-group-admin">
+                <label class="form-label-admin">Confirm New Password</label>
+                <input class="form-input-admin" type="password" id="settingsConfirm" placeholder="Repeat new password" />
+              </div>
+            </div>
+            <button class="btn-admin btn-admin-primary" onclick="saveCredentials()">Save Credentials</button>
+          </div>
+          <div class="table-card" style="padding:28px">
+            <div class="table-card-title" style="margin-bottom:20px">Store Settings</div>
+            <div class="form-group-admin">
+              <label class="form-label-admin">Store Name</label>
+              <input class="form-input-admin" type="text" value="Furniture Empire" />
+            </div>
+            <div class="form-group-admin">
+              <label class="form-label-admin">Contact Email</label>
+              <input class="form-input-admin" type="email" value="hello@furnitureempire.com" />
+            </div>
+            <div class="form-group-admin">
+              <label class="form-label-admin">WhatsApp Number</label>
+              <input class="form-input-admin" type="text" value="+255698741450" />
+            </div>
+            <button class="btn-admin btn-admin-primary" onclick="adminToast('Settings saved','success')">Save Settings</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── AUDIT LOG ─────────────────────────────── -->
+      <div class="admin-page" id="page-audit">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="table-card-title">Audit Log</div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Timestamp</th><th>Action</th><th>User</th><th>Details</th><th>Severity</th></tr></thead>
+              <tbody id="auditTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+  </div><!-- /admin-content -->
+</div><!-- /admin-layout -->
+
+<!-- ─── PRODUCT MODAL ──────────────────────────────────── -->
+<div class="admin-modal-overlay" id="productModal">
+  <div class="admin-modal" style="max-width:720px">
+    <div class="admin-modal-header">
+      <div class="admin-modal-title" id="productModalTitle">Add New Product</div>
+      <button class="admin-modal-close" onclick="closeProductModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="admin-modal-body">
+      <input type="hidden" id="editProductId" />
+      <div class="form-row">
+        <div class="form-group-admin">
+          <label class="form-label-admin">Product Name *</label>
+          <input class="form-input-admin" type="text" id="pName" placeholder="e.g. Ravello Sofa" required />
+        </div>
+        <div class="form-group-admin">
+          <label class="form-label-admin">Style</label>
+          <input class="form-input-admin" type="text" id="pStyle" placeholder="e.g. Scandinavian" />
+        </div>
+      </div>
+      <div class="form-row form-row-3">
+        <div class="form-group-admin">
+          <label class="form-label-admin">Category *</label>
+          <select class="form-input-admin form-select-admin" id="pCat">
+            <option value="">Select category</option>
+            <option>Living Room</option><option>Dining</option><option>Bedroom</option>
+            <option>Office</option><option>Lighting</option>
+          </select>
+        </div>
+        <div class="form-group-admin">
+          <label class="form-label-admin">Price ($) *</label>
+          <input class="form-input-admin" type="number" id="pPrice" placeholder="1200" min="0" />
+        </div>
+        <div class="form-group-admin">
+          <label class="form-label-admin">Old Price ($)</label>
+          <input class="form-input-admin" type="number" id="pOldPrice" placeholder="Leave blank if no sale" min="0" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group-admin">
+          <label class="form-label-admin">Badge</label>
+          <select class="form-input-admin form-select-admin" id="pBadge">
+            <option value="">None</option>
+            <option value="new">New</option>
+            <option value="hot">Hot</option>
+            <option value="sale">Sale</option>
+          </select>
+        </div>
+        <div class="form-group-admin">
+          <label class="form-label-admin">Rating (0–5)</label>
+          <input class="form-input-admin" type="number" id="pRating" placeholder="4.8" min="0" max="5" step="0.1" />
+        </div>
+      </div>
+      <div class="form-group-admin">
+        <label class="form-label-admin">Description</label>
+        <textarea class="form-input-admin form-textarea" id="pDesc" placeholder="Product description…"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group-admin">
+          <label class="form-label-admin">Primary Image URL</label>
+          <input class="form-input-admin" type="url" id="pImgA" placeholder="https://images.unsplash.com/…" />
+        </div>
+        <div class="form-group-admin">
+          <label class="form-label-admin">Hover Image URL</label>
+          <input class="form-input-admin" type="url" id="pImgB" placeholder="https://images.unsplash.com/…" />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-admin btn-admin-outline" onclick="closeProductModal()">Cancel</button>
+        <button class="btn-admin btn-admin-primary" onclick="saveProduct()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save Product
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── DELETE CONFIRM MODAL ──────────────────────────── -->
+<div class="admin-modal-overlay" id="deleteModal">
+  <div class="admin-modal" style="max-width:420px">
+    <div class="admin-modal-header">
+      <div class="admin-modal-title">Confirm Deletion</div>
+      <button class="admin-modal-close" onclick="closeDeleteModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="admin-modal-body">
+      <p style="font-size:14px;color:var(--text-2);margin-bottom:24px">Are you sure you want to delete <strong id="deleteProductName"></strong>? This action cannot be undone.</p>
+      <div class="form-actions">
+        <button class="btn-admin btn-admin-outline" onclick="closeDeleteModal()">Cancel</button>
+        <button class="btn-admin btn-admin-danger" onclick="confirmDelete()">Delete Product</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TOAST CONTAINER ───────────────────────────────── -->
+<div class="admin-toast-container" id="adminToastContainer"></div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
